@@ -17,21 +17,15 @@
 
 # 📸 Dashboard Preview
 
-![Dashboard](assets/dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
 # 🎥 Project Demonstration
 
-👉 Interactive AI-powered dashboard for monitoring and forecasting soil salinity across Gujarat districts.
+👉 Interactive AI-powered dashboard for monitoring and forecasting soil salinity across 33 Gujarat districts, spanning 2015–2030.
 
-![Demo](assets/demo.gif)
-
----
-
-# 🏗️ System Architecture
-
-![Architecture](assets/architecture.png)
+📹 [Watch the full demo](screenshots/Demo.mp4)
 
 ---
 
@@ -39,31 +33,28 @@
 
 Soil salinity is one of the most serious land degradation challenges affecting agricultural productivity, groundwater quality, and long-term sustainability in arid and semi-arid regions.
 
-The **Gujarat Soil Salinity Intelligence Platform** is an advanced Geospatial Artificial Intelligence (GeoAI) system designed to monitor, analyze, predict, and visualize soil salinity dynamics across Gujarat.
+The **Gujarat Soil Salinity Intelligence Platform** is a Geospatial Artificial Intelligence (GeoAI) system that monitors, analyzes, predicts, and visualizes soil salinity dynamics across **33 districts of Gujarat**, spanning **2015–2030**.
 
 The platform integrates:
 
-* Geospatial datasets
-* Historical climate variables
-* Vegetation indicators (NDVI)
-* Rainfall records
-* Temperature patterns
-* Machine Learning models
-* Deep Learning forecasting models
+* District-level geospatial boundaries
+* NASA POWER climate data (rainfall, temperature)
+* MODIS NDVI vegetation indicators (via Google Earth Engine)
+* Reference salinity parameters from CSSRI Bharuch (Central Soil Salinity Research Institute)
+* Classical machine learning models
+* Deep learning (temporal) forecasting
 
-to generate a comprehensive **Soil Salinity Prediction Index (SSPI)** and provide district-level salinity intelligence for researchers, planners, and policymakers.
-
-The system combines **GIS, Machine Learning, Deep Learning, Forecasting, and Interactive Web Mapping** into a unified decision-support platform.
+to generate a district-level **Soil Salinity Prediction Index (SSPI)** for researchers, planners, and policymakers, combining **GIS, Machine Learning, Deep Learning, Forecasting, and Interactive Web Mapping** into a single decision-support platform.
 
 ---
 
 # 🎯 Project Objectives
 
 * Monitor district-wise soil salinity conditions
-* Generate Soil Salinity Prediction Index (SSPI)
+* Generate a Soil Salinity Prediction Index (SSPI)
 * Identify salinity-prone regions
-* Analyze historical salinity trends
-* Forecast future salinity conditions
+* Analyze historical salinity trends (2015–2025)
+* Forecast future salinity conditions (2026–2030)
 * Compare machine learning model performance
 * Support agricultural planning and land management
 * Provide actionable recommendations for mitigation
@@ -72,11 +63,11 @@ The system combines **GIS, Machine Learning, Deep Learning, Forecasting, and Int
 
 # 🌍 Study Area
 
-### State: Gujarat, India
+### State: Gujarat, India — 33 Districts
 
 Gujarat contains extensive coastal zones, canal command areas, inland dry regions, and groundwater-dependent agricultural districts, making it one of India's most important regions for salinity assessment.
 
-The platform covers:
+The platform classifies districts into four zone types:
 
 * Coastal Districts
 * Canal Irrigation Zones
@@ -87,87 +78,51 @@ The platform covers:
 
 # 📊 Dataset Overview
 
-The project integrates multiple environmental and agricultural datasets.
-
 ### Data Sources
 
-* District Boundary Data (GeoPackage)
-* Historical Weather Data
-* Annual Rainfall Records
-* Temperature Data
-* NDVI Vegetation Indicators
-* Agricultural Land Characteristics
-* Soil Salinity Parameters
+* District boundaries — GeoPackage (`Gujarat_districts.gpkg`)
+* Historical weather data — NASA POWER (rainfall, Rabi-season temperature)
+* Vegetation indicators — MODIS NDVI via Google Earth Engine
+* Soil salinity reference parameters — CSSRI Bharuch
 
 ### Processed Features
 
-* Rainfall Annual
-* Rabi Temperature
+* Annual Rainfall
+* Rabi-Season Temperature
 * NDVI
-* District Classification
-* Zone Type
-* Historical SSPI
-* Forecasted SSPI
+* District Classification / Zone Type
+* Historical SSPI (2015–2025)
+* Forecasted SSPI (2026–2030)
 
 ---
 
 # 🧠 Machine Learning Models Implemented
 
-The platform evaluates multiple predictive approaches.
+## 1️⃣ Ridge Regression
 
-## 1️⃣ Linear Regression
-
-Used as baseline statistical model.
-
-### Purpose
-
-* Benchmark prediction performance
-* Understand feature relationships
-
----
+Baseline statistical model, used to benchmark prediction performance and understand feature relationships.
 
 ## 2️⃣ Random Forest
 
-Ensemble learning model for nonlinear soil salinity prediction.
-
-### Advantages
-
-* Handles nonlinear interactions
-* Robust against overfitting
-* Feature importance analysis
-
----
+Ensemble learning model for nonlinear soil salinity prediction — handles nonlinear interactions, robust against overfitting, supports feature importance analysis.
 
 ## 3️⃣ XGBoost
 
-Gradient boosting model for high-performance forecasting.
-
-### Advantages
-
-* High predictive accuracy
-* Efficient handling of complex datasets
-* Advanced regularization
-
----
+Gradient boosting model for high-performance forecasting — high predictive accuracy, efficient on complex datasets, advanced regularization.
 
 ## 4️⃣ Temporal Fusion Transformer (TFT)
 
-Deep learning model for temporal forecasting.
-
-### Advantages
-
-* Time-series forecasting
-* Long-term trend learning
-* Multi-variable dependency modeling
-* Superior predictive performance
+Deep learning model for temporal forecasting — learns long-term trends and multi-variable dependencies for superior predictive performance.
 
 ---
 
 # 📈 Model Performance
 
+> ⚠️ **Numbers need reconciling.** The table below is what shipped in this README previously, but it doesn't match the metrics currently shown in the live app itself (see `screenshots/model_comparison.png`, which reports Ridge Regression 74.5%, Random Forest 77.6%, XGBoost 77.2%, and TFT Transformer 87.1% — R²=0.871, MAE 4.32, RMSE 7.29). Please confirm which set is current (e.g. re-run `scripts/12_validate.py` against `salinity_db.sqlite`'s `model_metrics` table) before publishing.
+
 | Model             | MAE  | RMSE | R² Score |
 | ----------------- | ---- | ---- | -------- |
-| Linear Regression | 7.81 | 9.01 | 0.745    |
+| Ridge Regression  | 7.81 | 9.01 | 0.745    |
 | Random Forest     | 7.26 | 8.45 | 0.776    |
 | XGBoost           | 6.65 | 8.53 | 0.771    |
 | TFT Transformer   | 4.91 | 7.25 | 0.831    |
@@ -176,19 +131,15 @@ Deep learning model for temporal forecasting.
 
 🏆 **Temporal Fusion Transformer (TFT)**
 
-* R² Score: 0.831
-* MAE: 4.91
-
 ---
 
 # 🚀 Key Features
 
 ## 🗺️ Interactive GIS Dashboard
 
-* District-wise salinity visualization
-* Interactive maps
-* Dynamic district selection
-* Real-time statistics
+* District-wise salinity visualization (Folium maps)
+* Dynamic district selection and search
+* Real-time statistics per district
 
 ---
 
@@ -208,86 +159,47 @@ Automated classification:
 ## 🌊 Zone-Based Salinity Analysis
 
 ### Coastal Zone
-
-* Seawater intrusion assessment
-* Coastal salinity monitoring
+Seawater intrusion assessment, coastal salinity monitoring.
 
 ### Canal Zone
-
-* Waterlogging effects
-* Secondary salinization analysis
+Waterlogging effects, secondary salinization analysis.
 
 ### Inland Zone
-
-* Groundwater extraction impacts
-* Borewell salinity assessment
+Groundwater extraction impacts, borewell salinity assessment.
 
 ### Hilly Zone
-
-* Natural low-salinity monitoring
+Natural low-salinity monitoring.
 
 ---
 
 ## 🔮 Future Forecasting
 
-The platform predicts future salinity conditions using TFT-based forecasting.
-
-Capabilities include:
-
-* Trend forecasting
-* District-level prediction
-* Risk assessment
-* Long-term monitoring
+TFT-based forecasting from 2026 through 2030, with trend forecasting, district-level prediction, risk assessment, and long-term monitoring.
 
 ---
 
 ## 🎯 Smart Policy Recommendation Engine
 
-Automatically generates management recommendations based on:
-
-* Salinity severity
-* Geographic zone
-* Risk classification
-
-Examples include:
-
-* Gypsum application
-* Drainage management
-* Groundwater regulation
-* Salt-tolerant crop adoption
-* Coastal protection measures
+Automatically generates management recommendations based on salinity severity, geographic zone, and risk classification — e.g. gypsum application, drainage management, groundwater regulation, salt-tolerant crop adoption, and coastal protection measures.
 
 ---
 
 # 📍 Dashboard Modules
 
 ### Home Dashboard
-
-* Key Performance Indicators
-* Salinity Status
-* Forecast Overview
+Key performance indicators, salinity status, forecast overview.
 
 ### District Analysis
-
-* Historical Trends
-* Forecast Trends
-* Salinity Classification
+Historical trends, forecast trends, salinity classification.
 
 ### GIS Mapping
-
-* Interactive Folium Maps
-* Current Salinity Layer
-* Forecast Salinity Layer
+Interactive Folium maps, current salinity layer, forecast salinity layer.
 
 ### Model Comparison
-
-* Accuracy Metrics
-* Performance Evaluation
+Accuracy metrics, performance evaluation across all 4 models.
 
 ### Decision Support
-
-* Zone-specific recommendations
-* Risk mitigation guidance
+Zone-specific recommendations, risk mitigation guidance.
 
 ---
 
@@ -295,13 +207,13 @@ Examples include:
 
 ### Project Outputs
 
-✅ District-Level SSPI Calculation
+✅ District-Level SSPI Calculation (33 districts)
 
-✅ Soil Salinity Forecasting
+✅ Soil Salinity Forecasting (2026–2030)
 
 ✅ GIS-Based Visualization
 
-✅ Multi-Model Comparison
+✅ Multi-Model Comparison (4 models)
 
 ✅ Decision Support System
 
@@ -309,35 +221,30 @@ Examples include:
 
 ✅ Automated Policy Recommendations
 
-### Key Achievement
-
-Developed a complete GeoAI-driven agricultural intelligence platform capable of forecasting soil salinity with **83.1% predictive accuracy**.
-
 ---
 
 # 🔄 System Workflow
 
 ```text
-Weather Data
+NASA POWER + MODIS NDVI + CSSRI Reference Data
         │
         ▼
-Environmental Variables
-(NDVI, Rainfall, Temperature)
+Spatial Setup & District Join
         │
         ▼
-Feature Engineering
+Feature Engineering (Rainfall, Temp, NDVI, Trend)
         │
         ▼
 SSPI Calculation
         │
         ▼
-Machine Learning Models
+Machine Learning Models (Ridge, RF, XGBoost)
         │
         ▼
 TFT Forecasting
         │
         ▼
-SQLite Database
+SQLite Database (salinity_db.sqlite)
         │
         ▼
 GIS Visualization
@@ -354,38 +261,24 @@ Decision Support System
 # 🛠️ Technology Stack
 
 ## Programming
-
-* Python
+* Python 3.11
 
 ## Data Processing
-
-* Pandas
-* NumPy
+* Pandas, NumPy
 
 ## Geospatial Analytics
-
-* GeoPandas
-* Folium
+* GeoPandas, Folium, streamlit-folium
 
 ## Machine Learning
-
-* Scikit-Learn
-* XGBoost
+* Scikit-Learn, XGBoost, pymannkendall (trend detection)
 
 ## Deep Learning
-
-* PyTorch
-* PyTorch Forecasting
-* Lightning
+* PyTorch, PyTorch Forecasting, Lightning
 
 ## Visualization
-
-* Streamlit
-* Matplotlib
-* Plotly
+* Streamlit, Matplotlib, Plotly
 
 ## Database
-
 * SQLite
 
 ---
@@ -393,24 +286,27 @@ Decision Support System
 # 📂 Project Structure
 
 ```text
-soil_salinity_project/
+gujarat-soil-salinity-intelligence-platform/
 │
+├── app.py                          # Main entry point — run with: streamlit run app.py
 ├── app/
-│   └── dashboard.py
+│   └── dashboard.py                # Dashboard module/components
 │
 ├── data/
 │   └── Processed/
-│       ├── Gujarat_districts.gpkg
-│       ├── salinity_db.sqlite
-│       ├── xgb_model.pkl
-│       ├── rf_model.pkl
-│       ├── linear_model.pkl
-│       └── tft_model.ckpt
+│       ├── Gujarat_districts.gpkg  # District boundaries
+│       ├── master_raw.csv          # Merged raw weather + NDVI + district data
+│       ├── features_complete.csv   # Engineered features (trend, zone, etc.)
+│       ├── master_with_sspi.csv    # Final dataset with historical + forecast SSPI
+│       └── salinity_db.sqlite      # sspi_history, sspi_forecast, model_metrics tables
 │
-├── outputs/
-│   ├── charts/
-│   ├── maps/
-│   └── tables/
+├── screenshots/
+│   ├── dashboard.png
+│   ├── dashboard_home.png          # ⚠️ currently a 0-byte/corrupted file — needs re-upload
+│   ├── district_analysis.png
+│   ├── gis_map.png
+│   ├── model_comparison.png
+│   └── Demo.mp4
 │
 ├── scripts/
 │   ├── 01_setup_spatial.py
@@ -424,10 +320,13 @@ soil_salinity_project/
 │   ├── 08b_tft.py
 │   ├── 09_predict_future.py
 │   ├── 10_maps_charts.py
+│   ├── 10b_map_2025_current.py
 │   ├── 11_store_db.py
-│   └── 12_validate.py
+│   ├── 12_validate.py
+│   └── utilities/                  # check_weather.py, fix_sspi.py,
+│                                    # step6_cssri_manual.py, verify_step4.py
 │
-├── app.py
+├── .devcontainer/devcontainer.json # VS Code / Codespaces dev container config
 ├── requirements.txt
 ├── README.md
 └── LICENSE
@@ -440,9 +339,9 @@ soil_salinity_project/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/202519003/soil_salinity_project.git
+git clone https://github.com/202519003/gujarat-soil-salinity-intelligence-platform.git
 
-cd soil_salinity_project
+cd gujarat-soil-salinity-intelligence-platform
 ```
 
 ### Install Dependencies
@@ -456,6 +355,8 @@ pip install -r requirements.txt
 ```bash
 streamlit run app.py
 ```
+
+The dashboard reads directly from `data/Processed/salinity_db.sqlite` and the processed CSVs, which are already included — no need to re-run the pipeline just to view the dashboard. To regenerate them from raw sources, run the scripts in `scripts/` in numeric order (`01` → `12`).
 
 ---
 
@@ -497,11 +398,9 @@ This platform can support:
 
 GIS | GeoAI | Spatial Analytics | Machine Learning | Remote Sensing | Agricultural Intelligence
 
-🔗 LinkedIn:
-https://www.linkedin.com/in/mehulkumar-chaudhary-403516230
+🔗 LinkedIn: [linkedin.com/in/mehulkumar-chaudhary-403516230](https://www.linkedin.com/in/mehulkumar-chaudhary-403516230)
 
-🔗 GitHub:
-https://github.com/202519003
+🔗 GitHub: [github.com/202519003](https://github.com/202519003)
 
 ---
 
